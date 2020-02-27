@@ -1,0 +1,20 @@
+{
+  "name": "firebase-basic-course",
+  "version": "1.0.0",
+  "description": "Alapozó tanfolyam a Fireabase szolgálatatáshoz.",
+  "main": "gtb.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "firebase login && firebase deploy --only hosting:flicker-game"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Training360/firebase-basic-course.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Training360/firebase-basic-course/issues"
+  },
+  "homepage": "https://github.com/Training360/firebase-basic-course#readme"
+}
