@@ -1,10 +1,8 @@
 body,
 html {
-    margin: 0;
-    font: normal 0/0 Arial, Helvetica, sans-serif;
+    margin: 0;    
     background: #333;
     overflow: hidden;
-    color: #fff;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -34,7 +32,7 @@ html,
     src: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/60583/general_foundicons.eot?#iefix") format("embedded-opentype"), url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/60583/general_foundicons.woff") format("woff"), url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/60583/general_foundicons.ttf") format("truetype"), url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/60583/general_foundicons.svg#GeneralFoundicons") format("svg");
 }
 
-a {
+.logo a {
     text-decoration: none;
     color: #fff;
     display: block;
@@ -45,7 +43,7 @@ a {
     margin: 0 1px;
 }
 
-a:hover {
+.logo a:hover {
     color: #fff;
     background: rgba(255, 255, 255, .1)
 }
@@ -66,7 +64,9 @@ a:hover {
     position: absolute;
     top: 50%;
     left: 50%;
-    margin: -225px 0 0 -225px
+    margin: -225px 0 0 -225px;
+    font: normal 0/0 Arial, Helvetica, sans-serif;
+    color: #fff;
 }
 
 .logo .card {
@@ -245,18 +245,23 @@ a:hover {
     display: inline-block
 }
 
-.card {
+.logo .card {
     display: inline-block;
     perspective: 1000;
     -webkit-perspective: 1000;
     -moz-perspective: 1000;
+    border: none;
 }
 
-.card:not(.active):hover {
+.logo .card a:hover {
+    text-decoration: none;
+}
+
+.logo .card:not(.active):hover {
     opacity: .8
 }
 
-.card .b::before {
+.logo .card .b::before {
     content: attr(data-f);
     display: block;
     font: normal 100px/100px "GeneralFoundicons";
@@ -401,4 +406,15 @@ a:hover {
     #stats li b {
         width: auto
     }
+}
+
+/* Login. */
+.google-signin-btn {
+    background-image: url('../img/btn_google_signin_dark_normal_web@2x.png');
+}
+.google-signin-btn:focus {
+    background-image: url('../img/btn_google_signin_dark_focus_web@2x.png');
+}
+.modal-body.register {
+    display: none;
 }

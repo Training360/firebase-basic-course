@@ -181,6 +181,27 @@ $(() => {
         return array;
     };
 
+    // Check login state.
+    const checkLogin = () => {
+        
+        $('#login-modal').modal('show');
+
+        $('#g, .logo').hide();
+    };
+
+    const setLoginForm = () => {
+        $('.switch-login, .switch-register').click( (ev) => {
+            const button = $(ev.target);
+            if (button.hasClass('switch-register')) {
+                $('.modal-body.login').slideUp();
+                $('.modal-body.register').slideDown();
+            } else {
+                $('.modal-body.register').slideUp();
+                $('.modal-body.login').slideDown();
+            }
+        });
+    };
+
     // Init game.
     (() => {
         startScreen('flip');
@@ -203,6 +224,9 @@ $(() => {
         };
 
         initCards();
+
+        checkLogin();
+        setLoginForm();
 
     })();
 });

@@ -3,94 +3,178 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/style.css">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <meta
+        http-equiv="X-UA-Compatible"
+        content="ie=edge"
+    >
+    <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous"
+    >
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
     <title>Flip Game</title>
 </head>
 
-<div id="g"></div>
-
-<div class="logo">
-    <p class="info">Click the P to get started.</p>
-    <div class="card left">
-        <div class="flipper">
-            <div class="f c1">F</div>
-            <div class="b contentbox" id="stats">
-                <div class="padded">
-                    <h2>Figures</h2>
-                    Looks like you haven't FLIPped yet.
-                    <a href="#" class="playnow">Play now</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card active twist">
-        <div class="flipper">
-            <div class="b f">
-                <div class="c2">L</div>
-            </div>
-        </div>
-    </div>
-    <div class="card left">
-        <div class="flipper">
-            <div class="f c3">I</div>
-            <div class="b contentbox instructions">
-                <div class="padded">
-                    <h2>Instructions</h2>
-                    <p>Press [p] to pause, or [ESC] to abandon game.</p>
-                    <p>Flip is a timed card memory game. Click the green cards to see what symbol they uncover and try to find the matching symbol underneath the other cards.</p>
-                    <p>Uncover two matching symbols at once to eliminate them from the game.</p>
-                    <p>Eliminate all cards as fast as you can to win the game. Have fun FLIPing!</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="flipper">
-            <div class="f c4">P</div>
-            <div class="b contentbox levels">
-                <a href="#" data-level="casual" class="play">Casual</a>
-                <a href="#" data-level="medium" class="play">Medium</a>
-                <a href="#" data-level="hard" class="play">Hard</a>
-            </div>
-        </div>
-    </div>
-
-    <p class="info">Flip should work best in Google Chrome, decent in Firefox, IE10 and Opera;</p>
-</div>
-
-<div class="stat-template template">
-    <div class="padded">
-        <h2>Figures: <span>
-                        <b>#flip_won</b><i>Won</i>
-                        <b>#flip_lost</b><i>Lost</i>
-                        <b>#flip_abandoned</b><i>Abandoned</i></span>
-        </h2>
-        <ul>
-            <li><b>Best Casual:</b> <span>#flip_casual</span></li>
-            <li><b>Best Medium:</b> <span>#flip_medium</span></li>
-            <li><b>Best Hard:</b> <span>#flip_hard</span></li>
-        </ul>
-        <ul>
-            <li><b>Total Flips:</b> <span>#flip_matched_flip_wrong</span></li>
-            <li><b>Matched Flips:</b> <span>#flip_matched</span></li>
-            <li><b>Wrong Flips:</b> <span>#flip_wrong</span></li>
-        </ul>
-    </div>
-</div>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="lib/firebase-app.js"></script>
-<script src="lib/firebase-analytics.js"></script>
-<script src="lib/init.js"></script>
-
-<script src="lib/jquery-3.4.1.min.js"></script>
-<script src="js/main.js"></script>
-
 <body>
+    <div id="g"></div>
+    <div class="logo">
+        <p class="info">Click the P to get started.</p>
+        <div class="card left">
+            <div class="flipper">
+                <div class="f c1">F</div>
+                <div
+                    class="b contentbox"
+                    id="stats"
+                >
+                    <div class="padded">
+                        <h2>Figures</h2> Looks like you haven't FLIPped yet. <a
+                            href="#"
+                            class="playnow"
+                        >Play now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card active twist">
+            <div class="flipper">
+                <div class="b f">
+                    <div class="c2">L</div>
+                </div>
+            </div>
+        </div>
+        <div class="card left">
+            <div class="flipper">
+                <div class="f c3">I</div>
+                <div class="b contentbox instructions">
+                    <div class="padded">
+                        <h2>Instructions</h2>
+                        <p>Press [p] to pause, or [ESC] to abandon game.</p>
+                        <p>Flip is a timed card memory game. Click the green
+                            cards to see what symbol they uncover and try to
+                            find the matching symbol underneath the other cards.
+                        </p>
+                        <p>Uncover two matching symbols at once to eliminate
+                            them from the game.</p>
+                        <p>Eliminate all cards as fast as you can to win the
+                            game. Have fun FLIPing!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="flipper">
+                <div class="f c4">P</div>
+                <div class="b contentbox levels">
+                    <a
+                        href="#"
+                        data-level="casual"
+                        class="play"
+                    >Casual</a>
+                    <a
+                        href="#"
+                        data-level="medium"
+                        class="play"
+                    >Medium</a>
+                    <a
+                        href="#"
+                        data-level="hard"
+                        class="play"
+                    >Hard</a>
+                </div>
+            </div>
+        </div>
+        <p class="info">Flip should work best in Google Chrome, decent in
+            Firefox, IE10 and Opera;</p>
+    </div>
+    <div class="stat-template template">
+        <div class="padded">
+            <h2>Figures: <span>
+                    <b>#flip_won</b><i>Won</i>
+                    <b>#flip_lost</b><i>Lost</i>
+                    <b>#flip_abandoned</b><i>Abandoned</i></span>
+            </h2>
+            <ul>
+                <li><b>Best Casual:</b> <span>#flip_casual</span></li>
+                <li><b>Best Medium:</b> <span>#flip_medium</span></li>
+                <li><b>Best Hard:</b> <span>#flip_hard</span></li>
+            </ul>
+            <ul>
+                <li><b>Total Flips:</b> <span>#flip_matched_flip_wrong</span>
+                </li>
+                <li><b>Matched Flips:</b> <span>#flip_matched</span></li>
+                <li><b>Wrong Flips:</b> <span>#flip_wrong</span></li>
+            </ul>
+        </div>
+    </div>
+    <!-- Login window. -->
+    <div class="modal fade" id="login-modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+            <div class="modal-body login">
+                <form class="form-signin">
+                    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+                    <label for="inputEmail" class="sr-only">Email address</label>
+                    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                    <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Sign in</button>
+                  </form>
+                  <button class="btn btn-success btn-block btn-lg mt-3">
+                      Sign in with Google
+                  </button>
 
+                  <div class="text-center mt-3">
+                      <button class="btn btn-link switch-register">
+                          registration
+                      </button>
+                  </div>
+            </div>
+            <div class="modal-body register">
+                <form class="form-signin">
+                    <h1 class="h3 mb-3 font-weight-normal">Registration</h1>
+                    <label for="inputEmail" class="sr-only">Email address</label>
+                    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                    <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Ok</button>
+                  </form>
+
+                  <div class="text-center mt-3">
+                      <button class="btn btn-link switch-login">
+                          login
+                      </button>
+                  </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="lib/firebase-app.js"></script>
+    <script src="lib/firebase-analytics.js"></script>
+    <script src="lib/init.js"></script>
+    <script src="lib/jquery-3.4.1.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"
+    ></script>
+    <script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"
+    ></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>
