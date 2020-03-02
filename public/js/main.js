@@ -214,12 +214,23 @@ $(() => {
             }
         });
 
-        // Watch auth change.
-
-        // Send auth request.
+        handleLogin();
+        handleRegister();
+        
+        // Signout.
+        $('.sign-out-btn').click( (ev) => {
+            ev.preventDefault();
+            firebase.auth().signOut();
+        });
+        
+    };
+    
+    const handleLogin = () => {
         const loginForm = $('.modal-body.login form');
         const email = loginForm.find('input[type=email]');
         const password = loginForm.find('input[type=password]');
+        
+        // Send auth request.
         loginForm.on('submit', (ev) => {
             ev.preventDefault();
             firebase
@@ -232,13 +243,26 @@ $(() => {
                     alert(errorMessage);
                 });
         });
+    };
 
-        // Signout.
-        $('.sign-out-btn').click( (ev) => {
-            ev.preventDefault();
-            firebase.auth().signOut();
-        });
+    const handleRegister = () => {
+        const registerForm = $('.modal-body.register form');
+        const email = registerForm.find('input[type=email]');
+        const password = registerForm.find('input[type=password]');
         
+        // Send auth request.
+        registerForm.on('submit', (ev) => {
+            ev.preventDefault();
+            firebase
+                .auth()
+                .createUserWithEmailAndPassword(email.val(), password.val())
+                .catch(function(error) {
+                    // Handle Errors here.
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert(errorMessage);
+                });
+        });
     };
 
     // Init game.
