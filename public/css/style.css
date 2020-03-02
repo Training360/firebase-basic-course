@@ -409,12 +409,14 @@ html,
 }
 
 /* Login. */
-.google-signin-btn {
-    background-image: url('../img/btn_google_signin_dark_normal_web@2x.png');
-}
-.google-signin-btn:focus {
-    background-image: url('../img/btn_google_signin_dark_focus_web@2x.png');
-}
 .modal-body.register {
+    display: none;
+}
+
+.modal-body .alert {
+    display: none;
+}
+
+#g, .logo {
     display: none;
 }

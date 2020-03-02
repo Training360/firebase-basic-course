@@ -186,10 +186,12 @@ $(() => {
     const checkLogin = () => {
         const modal = $('#login-modal'); 
         const game = $('#g, .logo');
+        const nameSpan = $('.user-name');
 
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 User = Object.assign({}, user);
+                nameSpan.text(User.displayName || User.email);
                 modal.modal('hide');
                 game.show();
             } else {
@@ -216,6 +218,7 @@ $(() => {
 
         handleLogin();
         handleRegister();
+        handleGoogleLogin();
         
         // Signout.
         $('.sign-out-btn').click( (ev) => {
@@ -226,6 +229,8 @@ $(() => {
     };
     
     const handleLogin = () => {
+        toggleLoginError('', true);
+
         const loginForm = $('.modal-body.login form');
         const email = loginForm.find('input[type=email]');
         const password = loginForm.find('input[type=password]');
@@ -240,12 +245,14 @@ $(() => {
                     // Handle Errors here.
                     const errorCode = error.code;
                     const errorMessage = error.message;
-                    alert(errorMessage);
+                    toggleLoginError(errorMessage);
                 });
         });
     };
 
     const handleRegister = () => {
+        toggleLoginError('', true);
+
         const registerForm = $('.modal-body.register form');
         const email = registerForm.find('input[type=email]');
         const password = registerForm.find('input[type=password]');
@@ -260,9 +267,39 @@ $(() => {
                     // Handle Errors here.
                     const errorCode = error.code;
                     const errorMessage = error.message;
-                    alert(errorMessage);
+                    toggleLoginError(errorMessage);
                 });
         });
+    };
+
+    const handleGoogleLogin = () => {
+        toggleLoginError('', true);
+
+        $('.google-signin-btn').click( () => {
+            var provider = new firebase.auth.GoogleAuthProvider();
+            provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+            firebase.auth().useDeviceLanguage();
+
+            firebase.auth().signInWithPopup(provider).then(function(result) {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                var token = result.credential.accessToken;
+                // The signed-in user info.
+                User = Object.assign({}, result.user);
+              }).catch(function(error) {
+                // Handle Errors here.
+                toggleLoginError(error.message);
+              });
+        });
+    };
+
+    const toggleLoginError = (errorMessage, hide) => {
+        const alert = $('.modal-body.login .alert');
+        if (hide) {
+            return alert.hide();
+        }
+        
+        alert.show()
+            .text(errorMessage);
     };
 
     // Init game.

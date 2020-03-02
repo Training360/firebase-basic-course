@@ -94,7 +94,7 @@
         </div>
         <p class="info">
             <button class="btn btn-default text-white-50 sign-out-btn">
-                sign out
+                <span class="user-name"></span> sign out
             </button>
         </p>
     </div>
@@ -123,6 +123,7 @@
         <div class="modal-dialog modal-sm" role="document">
           <div class="modal-content">
             <div class="modal-body login">
+                <div class="alert alert-danger"></div>
                 <form class="form-signin">
                     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
                     <label for="inputEmail" class="sr-only">Email address</label>
@@ -131,7 +132,7 @@
                     <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
                     <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Sign in</button>
                   </form>
-                  <button class="btn btn-success btn-block btn-lg mt-3">
+                  <button class="btn btn-success btn-block btn-lg mt-3 google-signin-btn">
                       Sign in with Google
                   </button>
 
