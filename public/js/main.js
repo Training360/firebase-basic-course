@@ -11,6 +11,7 @@ $(() => {
     let startGame = 0;
     let level = '';
     let timer = 0;
+    let User = null;
 
     const startScreen = (text) => {
         Game
@@ -183,10 +184,22 @@ $(() => {
 
     // Check login state.
     const checkLogin = () => {
-        
-        $('#login-modal').modal('show');
+        const modal = $('#login-modal'); 
+        const game = $('#g, .logo');
 
-        $('#g, .logo').hide();
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                User = Object.assign({}, user);
+                modal.modal('hide');
+                game.show();
+            } else {
+                User = null;
+                modal.modal('show');
+                game.hide();
+            }
+        });
+
+
     };
 
     const setLoginForm = () => {
@@ -200,6 +213,32 @@ $(() => {
                 $('.modal-body.login').slideDown();
             }
         });
+
+        // Watch auth change.
+
+        // Send auth request.
+        const loginForm = $('.modal-body.login form');
+        const email = loginForm.find('input[type=email]');
+        const password = loginForm.find('input[type=password]');
+        loginForm.on('submit', (ev) => {
+            ev.preventDefault();
+            firebase
+                .auth()
+                .signInWithEmailAndPassword(email.val(), password.val())
+                .catch(function(error) {
+                    // Handle Errors here.
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert(errorMessage);
+                });
+        });
+
+        // Signout.
+        $('.sign-out-btn').click( (ev) => {
+            ev.preventDefault();
+            firebase.auth().signOut();
+        });
+        
     };
 
     // Init game.
