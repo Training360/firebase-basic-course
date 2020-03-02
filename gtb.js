@@ -1,7 +1,7 @@
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
-// Example: node .\gtb.js video_01
+// Example: node .\gtb.js video_01 
 async function runner() {
     let command = `git add --all`;
     command += ` && git commit -m "Create ${process.argv[2]} branch"`;
