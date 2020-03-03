@@ -88,7 +88,6 @@ $(() => {
         ev.preventDefault();
         initKeyboard();
         increase('flip_abandoned');
-        $('.info').fadeOut();
 
         level = $(ev.currentTarget).data('level');
         timer = settings.difficulties[level].time * 1000;
@@ -114,7 +113,7 @@ $(() => {
         }
 
         const shu = shuffle($.merge(obj, obj));
-        const cardSize = 100 / Math.sqrt(shu.length);
+        const cardSize = (100 / Math.sqrt(shu.length));
 
         for (let i = 0; i < shu.length; i++) {
             let code = shu[i];
@@ -314,7 +313,7 @@ $(() => {
                 },
                 "medium": {
                     "time": 90,
-                    "cards": 16
+                    "cards": 18
                 },
                 "hard": {
                     "time": 192,
