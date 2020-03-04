@@ -302,8 +302,11 @@ $(() => {
     };
 
     // Init game.
-    (() => {
+    ( async () => {
         startScreen('flip');
+
+        const serverSettings = await DB.get('settings');
+        console.log(serverSettings);
 
         settings = {
             "difficulties": {
