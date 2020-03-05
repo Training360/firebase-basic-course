@@ -23,7 +23,9 @@ const Log = {
     },
     save: () => {
         Log.current.endTime = new Date().getTime();
-        console.log(Log.current);
-        // 
+        DB.create('games', Log.current).then(
+            ref => console.log(ref),
+            err => console.error(err)
+        );
     },    
 }

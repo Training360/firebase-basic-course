@@ -9,4 +9,8 @@ const DB = {
         });
         return result;
     },
+    create: async (path, data) => {
+        const docRef = await DB.db.collection(path).add(data);
+        return docRef;
+    },
 };
