@@ -1,10 +1,4 @@
 $(() => {
-    // Global functions.
-    const set = (key, value) => localStorage.setItem(key, value);
-    const get = key => localStorage.getItem(key);
-    const increase = el => set(el, parseInt(get(el), 10), +1);
-    const decrease = el => set(el, parseInt(get(el), 10), -1);
-
     // Global variables.
     const Game = $('#g');
     let settings = {};
@@ -79,6 +73,9 @@ $(() => {
             .prependTo(Game)
             .css({ animation: `timer ${timer}ms linear` })
             .one('webkitAnimationEnd oanimationend msAnimationEnd animationend', e => {
+                // LOG --->
+                Log.save();
+                
                 startScreen('fail');
             });
     };
@@ -87,7 +84,6 @@ $(() => {
     $('.play').on('click', (ev) => {
         ev.preventDefault();
         initKeyboard();
-        increase('flip_abandoned');
 
         level = $(ev.currentTarget).data('level');
         timer = settings.difficulties[level].time * 1000;
@@ -100,6 +96,9 @@ $(() => {
 
         // Start timer.
         initTimer(timer);
+
+        // LOG --->
+        Log.start(User.uid);
     });
 
     // Init game board.
@@ -137,6 +136,9 @@ $(() => {
             return;
         }
 
+        // LOG --->
+        Log.increase('flipped');
+
         // Flip card.
         const data = $(e.currentTarget)
             .addClass('active')
@@ -150,6 +152,9 @@ $(() => {
                 const thisCard = Game.find(`.active .b[data-f=${data}]`);
 
                 if (thisCard.length > 1) {
+                    // LOG --->
+                    Log.increase('matched');
+
                     thisCard
                         .parents('.card')
                         .toggleClass('active card found')
@@ -158,6 +163,12 @@ $(() => {
                     // Win game.
                     if (!Game.find('.card').length) {
                         const time = $.now() - startGame;
+
+                        // LOG --->
+                        Log.set('won', true);
+                        Log.set('duration', time);
+                        Log.save();
+
                         startScreen('nice');
                     }
                 } else {
@@ -305,30 +316,11 @@ $(() => {
     ( async () => {
         startScreen('flip');
 
-        const serverSettings = await DB.get('settings');
-        console.log(serverSettings);
-
-        settings = {
-            "difficulties": {
-                "casual": {
-                    "time": 32,
-                    "cards": 8
-                },
-                "medium": {
-                    "time": 90,
-                    "cards": 18
-                },
-                "hard": {
-                    "time": 192,
-                    "cards": 32
-                }
-            }
-        };
+        settings = await DB.get('settings');
 
         initCards();
 
         checkLogin();
         setLoginForm();
-
     })();
 });
