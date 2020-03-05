@@ -24,7 +24,10 @@ const Log = {
     save: () => {
         Log.current.endTime = new Date().getTime();
         DB.create('games', Log.current).then(
-            ref => console.log(ref),
+            ref => {
+                console.log(ref);
+                Log.current = Object.assign({}, Log.model);
+            },
             err => console.error(err)
         );
     },    
