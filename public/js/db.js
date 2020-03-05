@@ -24,4 +24,14 @@ const DB = {
     delete: async (path) => {
         await DB.db.doc(`${path}`).delete();
     },
+    listen: (path, where, callback) => {
+        let ref = DB.db.collection(path).where(...where);
+        ref.onSnapshot( (querySnapshot) => {
+            const result = {};
+            querySnapshot.forEach((doc) => {
+                result[doc.id] = doc.data();
+            });
+            callback(result);
+        });
+    }
 };

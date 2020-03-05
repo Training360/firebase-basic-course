@@ -21,7 +21,7 @@ $(() => {
 
     const showStat = () => {
         const container = $('.flipper:first-child .padded .content');
-        DB.get('games', ['UID', '==', User.uid]).then( data => {
+        DB.listen('games', ['UID', '==', User.uid], data => {
             let stat = ``;
             for (let k in data) {
                 const row = [
