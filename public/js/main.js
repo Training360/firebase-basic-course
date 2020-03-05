@@ -103,6 +103,8 @@ $(() => {
             .css({ animation: `timer ${timer}ms linear` })
             .one('webkitAnimationEnd oanimationend msAnimationEnd animationend', e => {
                 // LOG --->
+                const time = $.now() - startGame;
+                Log.set('duration', time);
                 Log.save();
                 
                 startScreen('fail');
