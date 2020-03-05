@@ -19,6 +19,35 @@ $(() => {
         $('.c4').text(text.substring(3, 4));
     }
 
+    const showStat = () => {
+        const container = $('.flipper:first-child .padded .content');
+        DB.get('games', ['UID', '==', User.uid]).then( data => {
+            let stat = ``;
+            for (let k in data) {
+                const row = [
+                    data[k].duration, 
+                    data[k].flipped, 
+                    data[k].matched, 
+                    data[k].won ? '&#x2713;' : '&#x2715;'
+                ];
+                stat += `<p>${row.join(', ')}
+                            <button class="sd" id="${k}">Del</button>
+                            <button class="su" id="${k}">Upd</button>
+                        </p>`;
+            }
+            container
+                .html(`<h2>Statistics</h2>${stat}`)
+                .find('.sd, .su')
+                .click( async (ev) => {
+                    ev.stopPropagation();
+                    const id = ev.target.id;
+                    data[id].won = !data[id].won;
+                    const method = $(ev.target).hasClass('sd') ? 'delete' : 'update';
+                    await DB[method](`games/${ev.target.id}`, data[id]);
+                });
+        });
+    };
+
     // Init cards and set events.
     const initCards = () => {
         $('.logo .card:not(".twist")').on('click', (e) => {
@@ -204,6 +233,7 @@ $(() => {
                 nameSpan.text(User.displayName || User.email);
                 modal.modal('hide');
                 game.show();
+                showStat();
             } else {
                 User = null;
                 modal.modal('show');
