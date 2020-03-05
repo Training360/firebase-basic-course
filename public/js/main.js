@@ -42,8 +42,10 @@ $(() => {
                     ev.stopPropagation();
                     const id = ev.target.id;
                     data[id].won = !data[id].won;
-                    const method = $(ev.target).hasClass('sd') ? 'delete' : 'update';
-                    await DB[method](`games/${ev.target.id}`, data[id]);
+                    const method = $(ev.target).hasClass('sd') 
+                        ? 'delete' 
+                        : 'update';
+                    await DB[method](`games/${id}`, data[id]);
                 });
         });
     };
