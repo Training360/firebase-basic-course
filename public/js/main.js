@@ -25,9 +25,9 @@ $(() => {
             let stat = ``;
             for (let k in data) {
                 const row = [
-                    data[k].duration, 
-                    data[k].flipped, 
-                    data[k].matched, 
+                    data[k].duration,
+                    data[k].flipped,
+                    data[k].matched,
                     data[k].won ? '&#x2713;' : '&#x2715;'
                 ];
                 stat += `<p>${row.join(', ')}
@@ -38,7 +38,7 @@ $(() => {
             container
                 .html(`<h2>Statistics</h2>${stat}`)
                 .find('.sd, .su')
-                .click( async (ev) => {
+                .click(async (ev) => {
                     ev.stopPropagation();
                     const id = ev.target.id;
                     data[id].won = !data[id].won;
@@ -49,7 +49,8 @@ $(() => {
     };
 
     // Init cards and set events.
-    const initCards = () => {
+    const initCards = async () => {
+        settings = await DB.get('settings');
         $('.logo .card:not(".twist")').on('click', (e) => {
             e.preventDefault();
             $(e.currentTarget)
@@ -106,7 +107,7 @@ $(() => {
                 const time = $.now() - startGame;
                 Log.set('duration', time);
                 Log.save();
-                
+
                 startScreen('fail');
             });
     };
@@ -225,29 +226,28 @@ $(() => {
 
     // Check login state.
     const checkLogin = () => {
-        const modal = $('#login-modal'); 
+        const modal = $('#login-modal');
         const game = $('#g, .logo');
         const nameSpan = $('.user-name');
 
-        firebase.auth().onAuthStateChanged(function(user) {
+        firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
                 User = Object.assign({}, user);
                 nameSpan.text(User.displayName || User.email);
                 modal.modal('hide');
                 game.show();
                 showStat();
+                await initCards();
             } else {
                 User = null;
                 modal.modal('show');
                 game.hide();
             }
         });
-
-
     };
 
     const setLoginForm = () => {
-        $('.switch-login, .switch-register').click( (ev) => {
+        $('.switch-login, .switch-register').click((ev) => {
             const button = $(ev.target);
             if (button.hasClass('switch-register')) {
                 $('.modal-body.login').slideUp();
@@ -261,29 +261,29 @@ $(() => {
         handleLogin();
         handleRegister();
         handleGoogleLogin();
-        
+
         // Signout.
-        $('.sign-out-btn').click( (ev) => {
+        $('.sign-out-btn').click((ev) => {
             ev.preventDefault();
             firebase.auth().signOut();
         });
-        
+
     };
-    
+
     const handleLogin = () => {
         toggleLoginError('', true);
 
         const loginForm = $('.modal-body.login form');
         const email = loginForm.find('input[type=email]');
         const password = loginForm.find('input[type=password]');
-        
+
         // Send auth request.
         loginForm.on('submit', (ev) => {
             ev.preventDefault();
             firebase
                 .auth()
                 .signInWithEmailAndPassword(email.val(), password.val())
-                .catch(function(error) {
+                .catch(function (error) {
                     // Handle Errors here.
                     const errorCode = error.code;
                     const errorMessage = error.message;
@@ -298,14 +298,14 @@ $(() => {
         const registerForm = $('.modal-body.register form');
         const email = registerForm.find('input[type=email]');
         const password = registerForm.find('input[type=password]');
-        
+
         // Send auth request.
         registerForm.on('submit', (ev) => {
             ev.preventDefault();
             firebase
                 .auth()
                 .createUserWithEmailAndPassword(email.val(), password.val())
-                .catch(function(error) {
+                .catch(function (error) {
                     // Handle Errors here.
                     const errorCode = error.code;
                     const errorMessage = error.message;
@@ -317,20 +317,20 @@ $(() => {
     const handleGoogleLogin = () => {
         toggleLoginError('', true);
 
-        $('.google-signin-btn').click( () => {
+        $('.google-signin-btn').click(() => {
             var provider = new firebase.auth.GoogleAuthProvider();
             provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
             firebase.auth().useDeviceLanguage();
 
-            firebase.auth().signInWithPopup(provider).then(function(result) {
+            firebase.auth().signInWithPopup(provider).then(function (result) {
                 // This gives you a Google Access Token. You can use it to access the Google API.
                 var token = result.credential.accessToken;
                 // The signed-in user info.
                 User = Object.assign({}, result.user);
-              }).catch(function(error) {
+            }).catch(function (error) {
                 // Handle Errors here.
                 toggleLoginError(error.message);
-              });
+            });
         });
     };
 
@@ -339,18 +339,14 @@ $(() => {
         if (hide) {
             return alert.hide();
         }
-        
+
         alert.show()
             .text(errorMessage);
     };
 
     // Init game.
-    ( async () => {
+    (async () => {
         startScreen('flip');
-
-        settings = await DB.get('settings');
-
-        initCards();
 
         checkLogin();
         setLoginForm();
